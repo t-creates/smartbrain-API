@@ -1,8 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt-nodejs');
+const cors = require('cors');
 
 // Creates app by running express
 const app = express();
+
+// Cors a middlewawre for sending data between server and frontend
+app.use(cors());
 
 // for body-parser to work
 app.use(bodyParser.json());
@@ -25,6 +30,13 @@ const database = {
       password: 'bananas',
       entries: 0,
       joined: new Date()
+    }
+  ],
+  login: [
+    {
+      id: '987',
+      hash: '',
+      email: 'doug@gmail.com'
     }
   ]
 }
@@ -66,7 +78,7 @@ app.get('/profile/:id', (req, res) => {
     if (user.id === id) {
       found = true;
       return res.json(user);
-    } 
+    }
   })
   if (!found) {
     res.status(404).json('User not found');
@@ -81,12 +93,29 @@ app.put('/image', (req, res) => {
       found = true;
       user.entries++;
       return res.json(user.entries);
-    } 
+    }
   })
   if (!found) {
     res.status(404).json('User not found');
   }
 })
+
+// Always send sensitive info through https in a POST body 
+// POST requests are never cached, request will not remain in the browser history
+// No restriction on data length
+
+// becrypt hash for password protection
+// bcrypt.hash("bacon", null, null, function(err, hash) {
+//   // Store hash in your password DB.
+// });
+
+// Load hash from your password DB.
+// bcrypt.compare("bacon", hash, function(err, res) {
+//   // res == true
+// });
+// bcrypt.compare("veggies", hash, function(err, res) {
+//   // res = false
+// });
 
 app.listen(3000, () => {
   console.log('App is running on port 3000');
