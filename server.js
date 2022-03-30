@@ -49,20 +49,19 @@ app.get('/', (req, res) => {
 app.post('/signin', (req, res) => {
   if (req.body.email === database.users[0].email &&
     req.body.password === database.users[0].password) {
-    res.json('success')
+    res.json(database.users[0])
   } else {
-    res.status(400).json('error logging in');
+    res.status(400).json('Error With Login');
   }
 })
 
 // Register
 app.post('/register', (req, res) => {
-  const { email, name, password } = req.body;
+  const { email, name } = req.body;
   database.users.push({
     id: '3',
     name: name,
     email: email,
-    password: password,
     entries: 0,
     joined: new Date()
   })
