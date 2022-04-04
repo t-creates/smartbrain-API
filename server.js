@@ -15,8 +15,6 @@ const db = knex({
   }
 });
 
-
-
 // Creates app by running express
 const app = express();
 
