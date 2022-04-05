@@ -39,6 +39,9 @@ app.post('/signin', signin.handleSignin(db, bcrypt));
 // Register
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) });
 
+// API Call
+app.post('/imageurl', (req, res) => { image.handleAPICall(req, res) });
+
 // Get method for gettting /profile and ID --> /profile/2
 app.get('/profile/:id', (req, res) => { profile.handleGetProfileGet(req, res, db) });
 
