@@ -2,6 +2,9 @@
 // Register
 const handleRegister = (req, res, db, bcrypt) => {
   const { email, name, password } = req.body;
+  if (!email || !name || !password) {
+    return res.status(400).json('Incorrect Form Submission')
+  }
   const hash = bcrypt.hashSync(password);
   // knex to insert users into the database -- create a transaction when you need to do more than 2 things at once
   // Use trx instead of db 
